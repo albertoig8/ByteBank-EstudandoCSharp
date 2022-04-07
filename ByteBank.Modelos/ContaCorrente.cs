@@ -6,21 +6,48 @@ using System.Threading.Tasks;
 
 namespace ByteBank.Modelos
 {
+    /// <summary>
+    /// Define uma Conta Corrente do banco ByteBank.
+    /// </summary>
     public class ContaCorrente
     {
         private static int TaxaOperacao;
 
+        /// <summary>
+        /// TotalDeContasCriadas
+        /// </summary>
         public static int TotalDeContasCriadas { get; private set; }
 
+        /// <summary>
+        /// Titular
+        /// </summary>
         public Cliente Titular { get; set; }
 
+        /// <summary>
+        /// ContadorSaquesNaoPermitidos
+        /// </summary>
         public int ContadorSaquesNaoPermitidos { get; private set; }
+
+        /// <summary>
+        /// ContadorTransferenciasNaoPermitidas
+        /// </summary>
         public int ContadorTransferenciasNaoPermitidas { get; private set; }
 
+        /// <summary>
+        /// Numero
+        /// </summary>
         public int Numero { get; }
+
+        /// <summary>
+        /// Agencia
+        /// </summary>
         public int Agencia { get; }
 
         private double _saldo = 100;
+
+        /// <summary>
+        /// Saldo
+        /// </summary>
         public double Saldo
         {
             get
@@ -38,6 +65,12 @@ namespace ByteBank.Modelos
             }
         }
 
+        /// <summary>
+        /// Cria uma intâcia de ContaCorrente com os argumentos utilizados.
+        /// </summary>
+        /// <param name="agencia">Representa o valor da propiedade <see cref="Agencia"/> e deve possuir um valor maior que zero</param>
+        /// <param name="numero">Representa o valor da propiedade <see cref="Numero"/> e deve possuir um valor maior que zero</param>
+        /// <exception cref="ArgumentException">Exceção lançada quando o parametro <paramref name="agencia"/> ou <paramref name="numero"/> é menor ou igual a 0.</exception>
         public ContaCorrente(int agencia, int numero)
         {
             if (numero <= 0)
@@ -57,6 +90,12 @@ namespace ByteBank.Modelos
             TaxaOperacao = 30 / TotalDeContasCriadas;
         }
 
+        /// <summary>
+        /// Realiza o saque e atualiza o valor da propiedade <see cref="Saldo"/>.
+        /// </summary>
+        /// <param name="valor">Representa o valor do saque e deve ser maior que 0 e menor que o <see cref="Saldo"/></param>
+        /// <exception cref="ArgumentException">Exceção lançada quando um valor negativo é utilizado no argumento <paramref name="valor"/></exception>
+        /// <exception cref="SaldoInsuficienteException">Exceção lançada quando o valor do argumento <paramref name="valor"/> é maior que o valor da propiedade <see cref="Saldo"/></exception>
         public void Sacar(double valor)
         {
             if (valor < 0)
@@ -73,11 +112,22 @@ namespace ByteBank.Modelos
             _saldo -= valor;
         }
 
+        /// <summary>
+        /// Adiciona um <paramref name="valor"/> ao <see cref="Saldo"/> da Conta
+        /// </summary>
+        /// <param name="valor">Representa o valor de saque e deve ser maior que zero</param>
         public void Depositar(double valor)
         {
             _saldo += valor;
         }
 
+        /// <summary>
+        /// Transfere um valor de uma conta para a outra
+        /// </summary>
+        /// <param name="valor">Representa o valor que vai ser transferido e deve ser maior que zero</param>
+        /// <param name="contaDestino">Representa uma ContaCorrente instanciada para qual o valor vai ser depositado</param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="OperacaoFinanceiraException"></exception>
         public void Transferir(double valor, ContaCorrente contaDestino)
         {
             if (valor < 0)
