@@ -1,4 +1,5 @@
 ﻿using ByteBank.Modelos;
+using ByteBank.Modelos.Funcionarios;
 using Humanizer;
 using System;
 using System.Text.RegularExpressions;
@@ -9,6 +10,33 @@ namespace ByteBank.SistemaAgencia
     {
         static void Main(string[] args)
         {
+            ContaCorrente conta = new ContaCorrente(135457, 12347);
+            Desenvolvedor desenvolvedor = new Desenvolvedor("12354678910");
+
+            string contaToString = conta.ToString();
+
+            Console.WriteLine(contaToString);
+            Console.WriteLine(conta);
+
+            Cliente alberto_1 = new Cliente();
+            alberto_1.Profissao = "Desenvolvedor";
+            alberto_1.Nome = "Alberto";
+            alberto_1.CPF = "123.456.789-10";
+
+            Cliente alberto_2 = new Cliente();
+            alberto_2.Profissao = "Desenvolvedor";
+            alberto_2.Nome = "Alberto";
+            alberto_2.CPF = "123.456.789-10";
+
+            if (alberto_1.Equals(conta))
+            {
+                Console.WriteLine("São iguais");
+            }
+            else
+            {
+                Console.WriteLine("Não são iguais");
+            }
+
             Console.ReadLine();
         }
 
