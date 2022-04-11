@@ -8,14 +8,19 @@ namespace ByteBank.SistemaAgencia
     {
         static void Main(string[] args)
         {
-            DateTime dataFimPagamento = new DateTime(2022, 08, 17);
-            DateTime dataCorrente = DateTime.Now;
+           
 
-            TimeSpan diferenca = dataFimPagamento - dataCorrente;
+            string urlTeste = "https://www.bytebank.com/cambio";
+            int indiceByteBank = urlTeste.IndexOf("https://www.bytebank.com");
 
-            string mensagem = "Vencimento em " + TimeSpanHumanizeExtensions.Humanize(diferenca);
+            Console.WriteLine(urlTeste.StartsWith("https://www.bytebank.com"));
+            Console.WriteLine(urlTeste.EndsWith("cambio"));
 
-            Console.WriteLine(mensagem);
+            string url = "pagina?moedaOrigem=real&moedaDestino=dolar";
+
+            ExtratorValorDeArgumentosURL extratorValorDeArgumentosURL = new ExtratorValorDeArgumentosURL(url);
+
+            Console.WriteLine(extratorValorDeArgumentosURL.GetValor("MoedaOrigem"));
 
             Console.ReadLine();
         }
