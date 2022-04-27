@@ -10,66 +10,122 @@ namespace ByteBank.SistemaAgencia
     {
         static void Main(string[] args)
         {
-            ContaCorrente conta = new ContaCorrente(135457, 12347);
-            Desenvolvedor desenvolvedor = new Desenvolvedor("12354678910");
+            Lista<int> idades = new Lista<int>();
 
-            string contaToString = conta.ToString();
+            idades.Adicionar(4);
+            idades.AdicionarVarios(7, 3, 8);
 
-            Console.WriteLine(contaToString);
-            Console.WriteLine(conta);
+            int idadeSoma = 0;
 
-            Cliente alberto_1 = new Cliente();
-            alberto_1.Profissao = "Desenvolvedor";
-            alberto_1.Nome = "Alberto";
-            alberto_1.CPF = "123.456.789-10";
-
-            Cliente alberto_2 = new Cliente();
-            alberto_2.Profissao = "Desenvolvedor";
-            alberto_2.Nome = "Alberto";
-            alberto_2.CPF = "123.456.789-10";
-
-            if (alberto_1.Equals(conta))
+            for(int i = 0; i < idades.Tamanho; i++)
             {
-                Console.WriteLine("São iguais");
-            }
-            else
-            {
-                Console.WriteLine("Não são iguais");
+                int idade = idades[i];
             }
 
             Console.ReadLine();
         }
 
-        static void TestaString()
+        static void TestaListaDeObject()
         {
-            // "[123456789][123456789][123456789][123456789][-][123456789][123456789][123456789][123456789]"
-            // "[0-9][0-9][0-9][0-9][-][0-9][0-9][0-9][0-9]";
-            // "[0-9]{4,5}[-][0-9]{4}";
-            // "[0-9]{4,5}[-]{0,1}[0-9]{4}";
-            // "[0-9]{4,5}-{0,1}[0-9]{4}";
-            string padrao = "[0-9]{4,5}-?[0-9]{4}";
-            string textoDeTeste = "Meu nome é Alberto, me ligue em 99404-0805";
-            Match resultado = Regex.Match(textoDeTeste, padrao);
+            ListaDeObject listaDeIdades = new ListaDeObject();
 
-            Console.WriteLine(resultado.Value);
+            listaDeIdades.Adicionar(10);
+            listaDeIdades.Adicionar(9);
+            listaDeIdades.Adicionar(2);
+            listaDeIdades.AdicionarVarios(11, 7, 15);
 
-            Console.ReadLine();
+            for(int i = 0; i < listaDeIdades.Tamanho; i++)
+            {
+                int idade = (int)listaDeIdades[i];
+                Console.WriteLine($"Idade no indice {i} : {idade}");
+            }
 
-            string urlTeste = "https://www.bytebank.com/cambio";
-            int indiceByteBank = urlTeste.IndexOf("https://www.bytebank.com");
-
-            Console.WriteLine(urlTeste.StartsWith("https://www.bytebank.com"));
-            Console.WriteLine(urlTeste.EndsWith("cambio"));
-
-            Console.ReadLine();
-
-            string url = "pagina?moedaOrigem=real&moedaDestino=dolar";
-
-            ExtratorValorDeArgumentosURL extratorValorDeArgumentosURL = new ExtratorValorDeArgumentosURL(url);
-
-            Console.WriteLine(extratorValorDeArgumentosURL.GetValor("MoedaOrigem"));
-
-            Console.ReadLine();
         }
+
+        static int SomarVarios(params int[] numeros)
+        {
+            int acumulador = 0;
+            foreach(int numero in numeros)
+            {
+                acumulador += numero;
+            }
+            return acumulador;
+        }
+
+        static void TestaListaDeContaCorrente()
+        {
+            ListaDeContaCorrente lista = new ListaDeContaCorrente();
+
+            ContaCorrente contaDoBeto = new ContaCorrente(1111, 111111);
+
+            ContaCorrente[] contas = new ContaCorrente[]
+            {
+                contaDoBeto,
+                new ContaCorrente(2568, 568475),
+                new ContaCorrente(2568, 561245),
+                new ContaCorrente(2568, 257896)
+            };
+
+            lista.AdicionarVarios(contas);
+
+            lista.AdicionarVarios(
+                contaDoBeto,
+                new ContaCorrente(2568, 568475),
+                new ContaCorrente(2568, 561245),
+                new ContaCorrente(2568, 257896)
+            );
+
+            for (int i = 0; i < lista.Tamanho; i++)
+            {
+                ContaCorrente itemAtual = lista[i];
+                Console.WriteLine($"Item na posição {i} = Conta {itemAtual.Numero}/{itemAtual.Agencia}");
+            }
+        }
+
+        static void TestaArrayDeContaCorrente()
+        {
+            ContaCorrente[] contas = new ContaCorrente[]
+            {
+                new ContaCorrente(258, 369852),
+                new ContaCorrente(258, 148856),
+                new ContaCorrente(258, 365221),
+            };
+
+            for (int i = 0; i < contas.Length; i++)
+            {
+                ContaCorrente contaAtual = contas[i];
+
+                Console.WriteLine($"Conta {i} - {contaAtual.Numero}");
+            }
+        }
+
+        static void TestaArrayInt()
+        {
+            // ARRAY de inteiros com 5 posições.
+            int[] idades = new int[5];
+
+            idades[0] = 37;
+            idades[1] = 15;
+            idades[2] = 25;
+            idades[3] = 14;
+            idades[4] = 26;
+
+            int acumulador = 0;
+
+            for (int indice = 0; indice < idades.Length; indice++)
+            {
+                int idade = idades[indice];
+
+                Console.WriteLine($"Acessando o array idades no indice {indice}");
+                Console.WriteLine($"Valor de idades[{indice}] = {idade}");
+
+                acumulador += idade;
+            }
+
+            var media = acumulador / idades.Length;
+
+            Console.WriteLine($"madia de idades = {media}");
+        }
+
     }
 }
