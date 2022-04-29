@@ -1,7 +1,9 @@
 ﻿using ByteBank.Modelos;
 using ByteBank.Modelos.Funcionarios;
+using ByteBank.SistemaAgencia.Extensoes;
 using Humanizer;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace ByteBank.SistemaAgencia
@@ -10,16 +12,19 @@ namespace ByteBank.SistemaAgencia
     {
         static void Main(string[] args)
         {
-            Lista<int> idades = new Lista<int>();
+            List<int> idades = new List<int>();
 
-            idades.Adicionar(4);
-            idades.AdicionarVarios(7, 3, 8);
+            idades.Add(4);
+            idades.Add(15);
+            idades.Add(25);
+            idades.Add(850);
+            idades.Add(47);
 
-            int idadeSoma = 0;
+            idades.AdicionarVarios(78, 236, 158);
 
-            for(int i = 0; i < idades.Tamanho; i++)
+            for(int i = 0; i < idades.Count; i++)
             {
-                int idade = idades[i];
+                Console.WriteLine( idades[i]);
             }
 
             Console.ReadLine();
